@@ -12,7 +12,7 @@ import (
 func main() {
 
 	//read , modify with spaces and separating file line by line
-	readFile, err := os.Open("C:\\Users\\ASUS\\Desktop\\test.txt")
+	readFile, err := os.Open("C:\\Users\\ASUS\\Desktop\\Schedule.txt")
 	if err != nil {
 		log.Fatalf("failed to open file: %s", err)
 	}
@@ -42,12 +42,12 @@ func main() {
 
 		//var tempLines2 []uint8
 		//copy(tempLines2[:], tempLines[:])
-
+		//
 		//for m :=0 ; m< len(tempLines) ; m++ {
 		//	tempLines2 += tempLines[m]
 		//}
 		//tempLines2 := fileTextLines[i]
-
+		//
 		//string variable for holding result
 		result := ""
 
@@ -86,6 +86,7 @@ func main() {
 
 			abortArr := make([]int, 0)
 
+			golog.Info("abortArr * : ",abortArr)
 			step := 2
 			for len(tempLines2) > 1 {
 
@@ -110,8 +111,8 @@ func main() {
 							break
 						}
 
-						golog.Info("tempLines[index-2] : ",tempLines[index-2])
-						golog.Info(string(tempLines[index-2]))
+
+						golog.Info("string(tempLines[index-2]) : ",string(tempLines[index-2]))
 						if tempLines[index-2] == 'w' {
 
 							flag1 := 0
@@ -192,12 +193,13 @@ func main() {
 					LockComplete[tempLines2[t]-48] = true
 				}
 
+				golog.Info("tempLines : ",tempLines)
 				golog.Info("tempLines2 : ",tempLines2)
 				golog.Info("tempLines2[t]-48 : ",tempLines2[t]-48)
 
 				if LockComplete[tempLines2[t]-48] == true {
 					golog.Info("3")
-					golog.Info("string(fileTextLines[i][t-2]) : ",string(fileTextLines[i][t-2]))
+					//golog.Info("string(fileTextLines[i][t-2]) : ",string(fileTextLines[i][t-2]))
 
 					if tempLines2[t-2] == 'w' || tempLines2[t-2] == 'r' {
 
@@ -205,18 +207,19 @@ func main() {
 						result += tempLines2[t-2 : t+4]
 						result += "ul(" + tempLines2[t:t+4]
 
-						golog.Info(" helpTable : ",helpTable)
-						golog.Info("TransOrderLockNums : ",TransOrderLockNums)
-						golog.Info("TransOrderNums : ",TransOrderNums)
-						golog.Info("helpTable[tempLines2[t+2]-118][tempLines[t]-48] : ",helpTable[tempLines2[t+2]-118][tempLines[t]-48])
-						golog.Info("tempLines2[t+2]-118 : ",tempLines2[t+2]-118)
-						golog.Info("tempLines[t]-48 : ",tempLines[t]-48)
-						golog.Info("tempLines2[t-2:t-1] : ",tempLines2[t-2:t-1])
-						x:=strings.Index(helpTable[tempLines2[t+2]-118][tempLines[t]-48], tempLines2[t-2:t-1])
-						golog.Info("len(helpTable[tempLines2[t+2]-118][tempLines[t]-48]) : ",len(helpTable[tempLines2[t+2]-118][tempLines[t]-48]))
-						if x < len(helpTable[tempLines2[t+2]-118][tempLines[t]-48]){
-							helpTable[tempLines2[t+2]-118][tempLines[t]-48] = helpTable[tempLines2[t+2]-118][tempLines[t]-48][:x]+helpTable[tempLines2[t+2]-118][tempLines[t]-48][x+1:]
-						}
+						//golog.Info(" helpTable : ",helpTable)
+						//golog.Info("TransOrderLockNums : ",TransOrderLockNums)
+						//golog.Info("TransOrderNums : ",TransOrderNums)
+						//golog.Info("helpTable[tempLines2[t+2]-118][tempLines[t]-48] : ",helpTable[tempLines2[t+2]-118][tempLines[t]-48])
+						//golog.Info("tempLines2[t+2]-118 : ",tempLines2[t+2]-118)
+						//golog.Info("tempLines[t]-48 : ",tempLines[t]-48)
+						//golog.Info("tempLines2[t-2:t-1] : ",tempLines2[t-2:t-1])
+						//x:=strings.Index(helpTable[tempLines2[t+2]-118][tempLines[t]-48], tempLines2[t-2:t-1])
+						//golog.Info("len(helpTable[tempLines2[t+2]-118][tempLines[t]-48]) : ",len(helpTable[tempLines2[t+2]-118][tempLines[t]-48]))
+						//if x < len(helpTable[tempLines2[t+2]-118][tempLines[t]-48]){
+							//helpTable[tempLines2[t+2]-118][tempLines[t]-48] = helpTable[tempLines2[t+2]-118][tempLines[t]-48][:x]+helpTable[tempLines2[t+2]-118][tempLines[t]-48][x+1:]
+						//}
+						helpTable[tempLines2[t+2]-118][tempLines[t]-48] = ""
 
 						tempLines2 = tempLines2[:t-2] + tempLines2[t+4:]
 
@@ -226,9 +229,9 @@ func main() {
 						tempLines2 = tempLines2[:t-2] + tempLines2[t+2:]
 					}
 
-					golog.Info("tempLines : ",tempLines)
-					golog.Info("tempLines2 : ",tempLines2)
-					golog.Info("result : ", result)
+					//golog.Info("tempLines : ",tempLines)
+					//golog.Info("tempLines2 : ",tempLines2)
+					//golog.Info("result : ", result)
 
 				}else{
 
@@ -244,7 +247,7 @@ func main() {
 						abortArr = append(abortArr, int(tempLines2[t]-48))
 					}
 
-
+/////////////////////////////////////////////////////
 					if tempLines2[t-2] == 'w' || tempLines2[t-2] == 'r' {
 
 						tempLines2 = tempLines2[:t-2] + tempLines2[t+4:]
@@ -256,6 +259,8 @@ func main() {
 					}
 
 					golog.Info("abortArr : ",abortArr)
+					golog.Info("result *: ", result)
+
 
 				}
 
@@ -275,15 +280,20 @@ func main() {
 			golog.Info("fileTextLines[i] : ",fileTextLines[i])
 			for a:=0 ; a+2<len(fileTextLines[i]) ; a+=temp  {
 				golog.Info("777")
-				golog.Info("temp : ",temp)
+				golog.Info("a : ",a)
+				//golog.Info("temp : ",temp)
+				updFlag := false
 				for b:=0 ; b < len(abortArr) ; b++ {
-					golog.Info("len(abortArr) : ",len(abortArr))
-					golog.Info("abortArr : ",abortArr)
 
-					golog.Info("fileTextLines[i][a+2]-48 : ",fileTextLines[i][a+2]-48)
+					golog.Info("abortArr : ",abortArr)
+					golog.Info("result **: ", result)
+
+
+					//golog.Info("fileTextLines[i][a+2]-48 : ",fileTextLines[i][a+2]-48)
 
 					if int(fileTextLines[i][a+2]-48) == abortArr[b]{
 						golog.Info("888")
+						updFlag = true
 
 						if fileTextLines[i][a] == 'w' || fileTextLines[i][a] == 'r'{
 							tempLines += fileTextLines[i][a:a+6]
@@ -296,27 +306,47 @@ func main() {
 						break
 					}
 
+					//if fileTextLines[i][a] == 'w' || fileTextLines[i][a] == 'r'{
+					//	//tempLines += fileTextLines[i][a:a+6]
+					//	temp=6
+					//}else{
+					//	//tempLines += fileTextLines[i][a:a+4]
+					//	temp=4
+					//}
+				}
+
+				if updFlag == false{
+
 					if fileTextLines[i][a] == 'w' || fileTextLines[i][a] == 'r'{
-						//tempLines += fileTextLines[i][a:a+6]
 						temp=6
 					}else{
-						//tempLines += fileTextLines[i][a:a+4]
 						temp=4
 					}
+
 				}
 
 			}
 
+
+			if len(abortArr)==1 { // not sure if it is needed
+
+				golog.Info("999")
+				for c:=0 ; c+2<len(fileTextLines[i]) ; c+=temp  {
+					if fileTextLines[i][c] == 'w' || fileTextLines[i][c] == 'r'{
+						result += fileTextLines[i][c:c+6]
+						temp=6
+					}else{
+						result += fileTextLines[i][c:c+4]
+						temp=4
+					}
+				}
+				help =0
+			}
+
 			tempLines2=tempLines
 
-			golog.Info("tempLines* *: ",tempLines)
-			golog.Info("tempLines2* *: ",tempLines2)
-
-
-
-			//if _, err := fo.Write([]byte(result + "\r\n")); err != nil {
-			//	panic(err)
-			//}
+			//golog.Info("tempLines* *: ",tempLines)
+			//golog.Info("tempLines2* *: ",tempLines2)
 
 		}
 

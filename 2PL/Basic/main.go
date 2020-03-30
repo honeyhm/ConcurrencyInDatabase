@@ -13,7 +13,7 @@ import (
 func main() {
 
 	//read , modify with spaces and separating file line by line
-	readFile, err := os.Open("C:\\Users\\ASUS\\Desktop\\test.txt")
+	readFile, err := os.Open("C:\\Users\\ASUS\\Desktop\\Schedule.txt")
 	if err != nil {
 		log.Fatalf("failed to open file: %s", err)
 	}
@@ -73,7 +73,13 @@ func main() {
 
 		step:=0
 
+		counter:=0
 		for len(fileTextLines[i])>1 {
+			//deadlock checking
+			counter+=1
+			if counter>3{
+				break
+			}
 			// loop for iterating throw each schedule content
 			for j:=0 ; j<len(fileTextLines[i]) ; j+=step  {
 
@@ -278,6 +284,10 @@ func main() {
 		golog.Info("fileTextLines[i] : ",fileTextLines[i])
 		golog.Info("tempLines : ",tempLines)
 
+		result+=";"
+		if counter>3{
+			result+="D"
+		}
 		if _, err := fo.Write([]byte(result+"\r\n")); err != nil {
 			panic(err)
 		}

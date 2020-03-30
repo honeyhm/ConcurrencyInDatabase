@@ -12,7 +12,7 @@ import (
 func main() {
 
 	//read , modify with spaces and separating file line by line
-	readFile, err := os.Open("C:\\Users\\ASUS\\Desktop\\test.txt")
+	readFile, err := os.Open("C:\\Users\\ASUS\\Desktop\\Schedule.txt")
 	if err != nil {
 		log.Fatalf("failed to open file: %s", err)
 	}
@@ -38,7 +38,7 @@ func main() {
 	// loop for iterating throw all schedules
 	for i:=0 ; i<len(fileTextLines) ; i++ {
 
-		golog.Info("new schedule ....................................................................................")
+		golog.Info("new schedule ....................................................................................",i)
 
 		//string variable for holding result
 		result := ""
@@ -68,13 +68,15 @@ func main() {
 				break
 			}
 
+			//chandomin seen transaction
+			golog.Info("*1")
+			golog.Info("line[j+2] : ",line[j+2])
 			if tsCounterArr[line[j+2]-48] == 0 {
 				tsCounterArr[line[j+2]-48] = TSCounter
 				TSCounter++
 			}
-			golog.Info("tsCounterArr : ", tsCounterArr)
-			//golog.Info("TSCounter : ", TSCounter)
 
+			golog.Info("tsCounterArr : ", tsCounterArr)
 
 			abortNum :=0
 			flag1 := 0
@@ -97,7 +99,7 @@ func main() {
 				tsTemp := int(tsCounterArr[line[j+2]-48])
 
 				if rTemp <= tsTemp && wTemp <= tsTemp {
-
+					// no problem in accessing item
 					helpTable[line[j+4]-118][1] = strconv.Itoa(tsCounterArr[line[j+2]-48])
 					result = result + line[j:j+6]
 
@@ -144,31 +146,64 @@ func main() {
 				temp := line[j+2]-48
 				golog.Info("temp : ",temp)
 				index := strings.Index(line, strconv.Itoa(int(temp))+"," )
+
+				//helptemp:=0
 				for index != -1 {
 
 					if index <= j+2 {//////////////////////////////////////
+					//helptemp=1
 						golog.Info("****************************")
 						step -= 6
 					}
+					golog.Info("1**")
+
 					transHolder[temp] += line[index-2 : index+4]
 					line = line[:index-2] + line[index+4:]
 					index = strings.Index(line, strconv.Itoa(int(temp))+"," )
 				}
 
+				//golog.Info("helptemp : ",helptemp)
+				//if helptemp == 1{
+				//	step -= 6
+				//}
+				golog.Info("step : ",step)
+
+				golog.Info("2**")
 				index = strings.Index(line, strconv.Itoa(int(temp)) )
 				transHolder[temp] += line[index-2 : index+2]
 				line = line[:index-2] + line[index+2:]
 
 				//modifying result string after cascading rollback
+				golog.Info("3**")
 				resIndex := strings.Index(result, strconv.Itoa(int(temp))+"," )
+				golog.Info("resIndex : ",resIndex)
+				golog.Info("j : ",j)
+				golog.Info("len(line) : ",len(line))
+				golog.Info("i : ",i)
 				for resIndex != -1 {
+					golog.Info("6**")
 					result = result[:resIndex] + result[resIndex+6:]
+					golog.Info("7**")
 					resIndex = strings.Index(result, strconv.Itoa(int(temp))+"," )
+					golog.Info("8**")
 				}
 
+				golog.Info("4**")
 				golog.Info("transHolder* : ",transHolder)
 				golog.Info("abortNum : ",abortNum)
+				golog.Info("j : ",j)
+				golog.Info("len(line) : ",len(line))
+				//golog.Info("line[j+2]-48 : ",line[j+2]-48)
+				golog.Info("line : ",line)
+				//golog.Info("line[j+2] ; ",line[j+2])
+				golog.Info("tsCounterArr+++ : ", tsCounterArr)
+				golog.Info("5**")
+				golog.Info("i : ",i)
 				aTemp = abortNum
+
+
+				//step = 6
+
 			}
 
 
